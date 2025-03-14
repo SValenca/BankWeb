@@ -8,20 +8,32 @@ public class Pessoa {
     private String email;
     private String tel;
 
+    // Construtor para pessoa física (CPF)
     public Pessoa(String nome, String email, String tel, String dataNasc, String cpf) throws Exception {
-        this.setNome(nome); // ou this.nome = nome
-        this.setEmail(email); // ou this.email = email
+        this.setNome(nome);
+        this.setEmail(email);
         this.setTel(tel);
         this.setdataNasc(dataNasc);
-        this.setCpf(cpf); // ou this.tel = tel
+        this.setCpf(cpf);
     }
 
-    public Pessoa(String nome, String email, String tel, String cnpj) throws Exception {
-        this.setNome(nome); // ou this.nome = nome
-        this.setEmail(email); // ou this.email = email
-        this.setTel(tel); // ou this.tel = tel
+    // Construtor para pessoa jurídica (CNPJ)
+    public Pessoa(String nome, String email, String tel, String dataNasc, String cnpj, boolean isPJ) throws Exception {
+        this.setNome(nome);
+        this.setEmail(email);
+        this.setTel(tel);
+        this.setdataNasc(dataNasc);
         this.setCnpj(cnpj);
-    } // .TRIM ele apaga os espaços do texto (Sempre que manipular String deve usar )
+    }
+
+    // Se quiser manter o construtor original de CNPJ, adicione a data
+    public Pessoa(String nome, String email, String tel, String cnpj) throws Exception {
+        this.setNome(nome);
+        this.setEmail(email);
+        this.setTel(tel);
+        this.setCnpj(cnpj);
+        // Data de nascimento fica como null para pessoa jurídica
+    }
 
     public void setNome(String nome) throws Exception { // O método .EQUALS é utilizado para comparações.
         if (nome.trim().equals("")) // THROWS (com S no final) é usada em um método para informar ao código de
