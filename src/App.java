@@ -43,48 +43,75 @@ public class App {
 
             System.out.print("Digite o nome da sua agencia: ");
             String nomeAgencia = sc.nextLine();
-
+            System.out.println();
             System.out.print("Digite o numero da sua agencia: ");
             String numeroAgencia = sc.nextLine();
+            System.out.println();
 
             System.out.print("Digite o telefone da sua agencia: ");
             String telAgencia = sc.nextLine();
+            System.out.println();
 
             System.out.print("Digite o email da sua agencia: ");
             String emailAgencia = sc.nextLine();
+            System.out.println();
 
             agencia = new Agencia(nomeAgencia, numeroAgencia, telAgencia, emailAgencia);
 
             System.out.print("Digite o numero da sua conta: ");
             String numeroConta = sc.nextLine();
+            System.out.println();
 
             System.out.print("Deseja fazer um deposito inicial? (s/n) ");
             resp = sc.next().charAt(0);
             sc.nextLine();
-
             if (resp == 's') {
-                System.out.print("Digite o valor do seu deposito (use ponto como separador decimal, ex: 100.50): ");
+                System.out.print("Digite o valor do seu deposito : ");
                 try {
-
                     String saldoStr = sc.nextLine();
-                    double saldo = Double.parseDouble(saldoStr.replace(",", "."));
-                    conta = new Conta(numeroConta, saldo, agencia, pessoa);
+                    double saldoInicial = Double.parseDouble(saldoStr.replace(",", "."));
+                    conta = new Conta(numeroConta, saldoInicial, agencia, pessoa);
                 } catch (NumberFormatException e) {
-                    System.out.println("Valor inválido! Assumindo saldo zero.");
+                    System.out.println("Valor inválido! saldo zero.");
                     conta = new Conta(numeroConta, 0.0, agencia, pessoa);
+
                 }
             } else {
-
-                conta = new Conta(numeroConta, 0.0, agencia, pessoa);
+                conta = new Conta(numeroConta, agencia, pessoa);
             }
 
             System.out.println("\nConta criada com sucesso!");
-            System.out.println("Agencia: " + conta.getAgencia().getNome());
-            System.out.println("Cliente: " + conta.getPessoa().getNome());
-            System.out.println("Saldo: " + conta.getSaldo());
+            System.out.println("Dados da conta:");
+            System.out.println(conta);
+            System.out.println();
+
+            System.out.print("Deseja fazer um deposito? (s/n) ");
+            resp = sc.next().charAt(0);
+            sc.nextLine();
+            System.out.println();
+
+            if (resp == 's') {
+                System.out.print("Valor do deposito: ");
+                String saldoStr = sc.nextLine();
+                double saldo = Double.parseDouble(saldoStr.replace(",", "."));
+                conta.deposito(saldo);
+                System.out.println("Atualização de saldo:");
+                System.out.println(conta);
+            }
+            System.out.print("Deseja fazer um saque? (s/n) ");
+            resp = sc.next().charAt(0);
+            sc.nextLine();
+            if (resp == 's') {
+                System.out.print("Digite o valor do saque: ");
+                String saldoStr = sc.nextLine();
+                double saqueConta = Double.parseDouble(saldoStr.replace(",", "."));
+                conta.saque(saqueConta);
+                System.out.println("Atualização de saldo:");
+                System.out.println(conta);
+            }
+
         } catch (Exception e) {
-            System.err.println("Erro: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Erro: ");
         }
         sc.close();
     }

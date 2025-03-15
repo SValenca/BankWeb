@@ -1,16 +1,23 @@
 package domain.model;
 
 public class Conta {
-    private double saldo;
-    private String numero;
-    private Agencia agencia;
-    private Pessoa pessoa;
+    private static double saldo;
+    private static String numero;
+    private static Agencia agencia;
+    private static Pessoa pessoa;
+    private static final double TARIFA_SAQUE = 5.0;
 
-    public Conta(String numero, double saldo, Agencia agencia, Pessoa pessoa) {
-        this.numero = numero;
-        this.saldo = saldo;
-        this.agencia = agencia;
-        this.pessoa = pessoa;
+    public Conta(String numero, Agencia agencia, Pessoa pessoa) {
+        Conta.numero = numero;
+        Conta.agencia = agencia;
+        Conta.pessoa = pessoa;
+    }
+
+    public Conta(String numero, double saldoInicial, Agencia agencia, Pessoa pessoa) {
+        Conta.numero = numero;
+        deposito(saldoInicial);
+        Conta.agencia = agencia;
+        Conta.pessoa = pessoa;
     }
 
     public double getSaldo() {
@@ -18,7 +25,7 @@ public class Conta {
     }
 
     public void setSaldo(double saldo) {
-        this.saldo = saldo;
+        Conta.saldo = saldo;
     }
 
     public String getNumero() {
@@ -26,7 +33,7 @@ public class Conta {
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        Conta.numero = numero;
     }
 
     public Agencia getAgencia() {
@@ -34,7 +41,7 @@ public class Conta {
     }
 
     public void setAgencia(Agencia agencia) {
-        this.agencia = agencia;
+        Conta.agencia = agencia;
     }
 
     public Pessoa getPessoa() {
@@ -42,7 +49,24 @@ public class Conta {
     }
 
     public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+        Conta.pessoa = pessoa;
     }
 
+    public void deposito(double quantia) {
+        saldo += quantia;
+    }
+
+    public void saque(double quantia) {
+        saldo -= quantia + TARIFA_SAQUE;
+    }
+
+    public String toString() {
+        return "Conta: "
+                + numero
+                + ","
+                + " Titular: "
+                + pessoa.getNome()
+                + ", Saldo: $"
+                + String.format("%.2f", saldo);
+    }
 }
